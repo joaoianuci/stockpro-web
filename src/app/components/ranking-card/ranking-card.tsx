@@ -1,4 +1,3 @@
-import { TriangleIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,14 +7,19 @@ import {
 } from "../ui/card";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { Separator } from "../ui/separator";
 
 interface RankingCardProps {
   title: string;
   items: {
-    symbol: string;
-    img: string;
+    change: number;
+    close: number;
+    logo: string;
     name: string;
-    value: string;
+    sector: string;
+    type: string;
+    volume: number;
+    stock: string;
   }[];
   action?: {
     label: string;
@@ -29,29 +33,41 @@ export default function RankingCard({
   action,
 }: RankingCardProps) {
   return (
-    <Card className="w-[30%]">
+    <Card className="w-[33%] min-w-[350px]">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="mb-4">{title}</CardTitle>
+        <Separator />
       </CardHeader>
       <CardContent>
         <ul>
           {items.map((item) => (
             <li
-              key={item.symbol}
+              key={item.stock}
               className="flex items-center justify-between py-2"
             >
-              <div className="flex items-center space-x-2">
-                <Image src={item.img} alt={item.name} width={24} height={24} />
-                <span>{item.symbol}</span>
-                <span>{item.name}</span>
+              <div className="flex gap-2 justify-start">
+                <div className="pt-1">
+                  <Image
+                    src={item.logo}
+                    alt={item.name}
+                    width={24}
+                    height={24}
+                  />
+                </div>
+                <div className="flex flex-col gap-1 justify-start">
+                  <b className="text-sm">{item.stock}</b>
+                  <span className="text-muted-foreground text-xs">
+                    {item.name}
+                  </span>
+                </div>
               </div>
-              <span>{item.value}</span>
+              <span>{item.volume}</span>
             </li>
           ))}
         </ul>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={action?.onClick}>
+        <Button variant="outline" onClick={action?.onClick} className="m-auto w-full">
           {action?.label}
         </Button>
       </CardFooter>
