@@ -1,18 +1,15 @@
 "use client";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./components/theme-provider";
 
-const providers = [
-  ThemeProvider,
-];
+const queryClient = new QueryClient();
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      {providers.reduceRight((acc, Provider) => {
-        return <Provider>{acc}</Provider>;
-      }, children)}
-    </>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>{children}</ThemeProvider>
+    </QueryClientProvider>
   );
 };
 
